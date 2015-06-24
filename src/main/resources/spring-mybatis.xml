@@ -69,6 +69,23 @@
         UserMapper.xml位于com.apollo.console.baseapi.*.mapper包下，这样UserMapper.xml就可以被自动扫描
          -->
         <property name="mapperLocations" value="classpath*:com/apollo/console/baseapi/*/mapper/*.xml" />
+        
+        <!-- 分页开始 -->
+        <property name="typeAliasesPackage" value="com.apollo.console.*.bean"/>
+	    <property name="plugins">
+	      <array>
+	        <bean class="com.github.pagehelper.PageHelper">
+	          <property name="properties">
+	            <value>
+	              dialect=mysql
+	              rowBoundsWithCount=true
+	              params=pageNum=start;pageSize=limit;
+	            </value>
+	          </property>
+	        </bean>
+	      </array>
+	    </property>
+	    <!-- 分页结束 -->
     </bean>
     <!-- 配置扫描器 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -130,22 +147,4 @@
         <aop:advisor advice-ref="druid-stat-interceptor" pointcut-ref="druid-stat-pointcut" />
     </aop:config>
 
-        
-        
-    <!-- 分页开始 -->
-    <property name="typeAliasesPackage" value="com.apollo.appsvc.*.bean"/>
-    <property name="plugins">
-      <array>
-        <bean class="com.github.pagehelper.PageHelper">
-          <property name="properties">
-            <value>
-              dialect=mysql
-              rowBoundsWithCount=true
-              params=pageNum=start;pageSize=limit;
-            </value>
-          </property>
-        </bean>
-      </array>
-    </property>
-    <!-- 分页结束 -->
 </beans>
